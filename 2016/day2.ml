@@ -6,6 +6,8 @@ let instructions =
   "/home/txx/github/aococaml/2016/resources/day2.txt"
   |> In_channel.read_lines
 
+exception Bad_instruction of char
+
 type position = {x: int; y: int}
 
 (* Part 1 *)
@@ -16,7 +18,7 @@ let execute_instruction ({x; y} as pos) ins =
   | 'R' -> {pos with x = x + (if x < 1 then 1 else 0 )}
   | 'D' -> {pos with y = y - (if y > -1 then 1 else 0)}
   | 'L' -> {pos with x = x - (if x > -1 then 1 else 0)}
-  | _ -> pos
+  | c -> raise (Bad_instruction c)
 
 let position_to_button {x; y} =
   match (x, y) with
@@ -51,7 +53,7 @@ let execute_real_instruction ({x; y} as pos) ins =
     | 'R' -> {pos with x = x + 1}
     | 'D' -> {pos with y = y - 1}
     | 'L' -> {pos with x = x - 1}
-    | _ -> pos in
+    | c -> raise (Bad_instruction c) in
   if distance new_pos origin <= 2 then
     new_pos
   else pos
