@@ -32,7 +32,8 @@ let new_direction_position (dir: direction) (pos: position) (step: step) =
   new_dir, {x = pos.x + x; y = pos.y + y}
 
 let steps =
-  "/home/txx/github/aococaml/2016/resources/day1.txt"
+  "./resources/day1.txt"
+  |> Filename.realpath
   |> In_channel.read_all
   |> String.rstrip
   |> String.split_on_chars ~on:[' '; ',']

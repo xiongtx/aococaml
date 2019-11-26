@@ -3,7 +3,8 @@ open Core
 let (|>) x f = f x
 
 let instructions =
-  "/home/txx/github/aococaml/2016/resources/day2.txt"
+  "./resources/day2.txt"
+  |> Filename.realpath
   |> In_channel.read_lines
 
 exception Bad_instruction of char
