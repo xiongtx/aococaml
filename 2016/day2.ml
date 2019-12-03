@@ -40,10 +40,10 @@ let code instructions move_f translate_f =
 
 let () = printf "Part 1: %s\n" (code instructions execute_instruction position_to_button)
 
+(* Part 2 *)
+
 let distance {x = x1; y = y1} {x = x2; y = y2} =
   abs x1 - x2 + abs y1 - y2
-
-(* Part 2 *)
 
 let execute_real_instruction ({x; y} as pos) ins =
   let origin = {x = 0; y = 0} in
