@@ -1,5 +1,7 @@
 open Core
 
+(** Part 1 **)
+
 type step =
   | Right of int
   | Left of int
@@ -17,6 +19,15 @@ let parse_step s =
   | 'R' -> Right num_steps
   | 'L' -> Left num_steps
 
+let steps =
+  "./resources/day1.txt"
+  |> Filename.realpath
+  |> In_channel.read_all
+  |> String.rstrip
+  |> String.split_on_chars ~on:[' '; ',']
+  |> List.filter ~f:(fun s -> s <> "")
+  |> List.map ~f:parse_step
+
 let new_direction_position (dir: direction) (pos: position) (step: step) =
   let new_dir, {x; y} = match dir, step with
     | North, Left n -> West, {x = -n; y = 0}
@@ -29,20 +40,15 @@ let new_direction_position (dir: direction) (pos: position) (step: step) =
     | West, Right n -> North, {x = 0; y = n} in
   new_dir, {x = pos.x + x; y = pos.y + y}
 
-let steps =
-  "./resources/day1.txt"
-  |> Filename.realpath
-  |> In_channel.read_all
-  |> String.rstrip
-  |> String.split_on_chars ~on:[' '; ',']
-  |> List.filter ~f:(fun s -> s <> "")
-  |> List.map ~f:parse_step
-
 let distance steps =
   steps
   |> List.fold ~init:(North, {x = 0; y = 0}) ~f:(fun (dir, pos) step ->
          new_direction_position dir pos step)
   |> (fun (_, {x; y}) -> abs x + abs y)
+
+let () = printf "Part 1: %d\n" (distance steps)
+
+(** Part 2 **)
 
 type segment = {p: position; q: position}
 
@@ -90,3 +96,5 @@ let first_revisited_distance steps =
   |> (fun (_, _, segments, opt) -> match opt with
                                    | Some {x; y} -> abs x + abs y
                                    | None -> 0)
+
+let () = printf "Part 2: %d\n" (first_revisited_distance steps)
