@@ -1,7 +1,5 @@
 open Core
 
-let (|>) x f = f x
-
 (** Part 1 **)
 
 let masses =

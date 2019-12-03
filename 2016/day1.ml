@@ -1,7 +1,5 @@
 open Core
 
-let (|>) x f = f x
-
 type step =
   | Right of int
   | Left of int

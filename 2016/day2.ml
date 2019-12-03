@@ -1,7 +1,5 @@
 open Core
 
-let (|>) x f = f x
-
 let instructions =
   "./resources/day2.txt"
   |> Filename.realpath
