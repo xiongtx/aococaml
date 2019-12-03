@@ -41,14 +41,14 @@ let rec find_pair' codes pairs =
                                     arr.(2) <- verb;
                                     if (exec_codes arr 0).(0) = goal then
                                       pair
-                                    else test_pairs codes rest
+                                    else find_pair' codes rest
 
 let find_pair codes =
   let range = List.range 0 100 in
   let pairs = range
               |> List.map ~f:(fun x -> List.map range ~f:(fun y -> (x, y)))
               |> List.concat in
-  find_pair codes pairs
+  find_pair' codes pairs
 
 let part_2 codes =
   let (noun, verb) = find_pair codes in
